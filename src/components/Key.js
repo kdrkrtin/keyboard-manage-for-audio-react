@@ -78,7 +78,6 @@ const Key = ({ keyData }) => {
             accept=".mp3,.wav"
             onChange={changeInput}
             ref={inpFile}
-            title={false}
           />
           {keyList.map(
             (item, index) =>

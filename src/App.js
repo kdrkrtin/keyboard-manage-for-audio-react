@@ -2,12 +2,14 @@ import { useEffect, useState, useRef } from "react";
 import Keyboard from "./components/Keyboard";
 import Context from "./context";
 import "./assets/css/main.css";
+import Header from "./components/Header";
 
 const App = () => {
   const [keyboard, setKeyboard] = useState([]);
   const [keyboardList, setKeyboardList] = useState([]);
   const [keyList, setKeyList] = useState([]);
   const [audioItem, setAudioItem] = useState({});
+  const [audioEl, setAudioEl] = useState(null);
   const container = useRef();
   const audioWrapper = useRef();
 
@@ -27,20 +29,28 @@ const App = () => {
   }, [audioItem]);
 
   const keyHandle = (e) => {
-    const pressKey = e.key === ' ' ? 'space' : e.key.toLocaleLowerCase();
+    let pressKey = '';
+    if (e.key === ' ') {
+      pressKey = e.key === ' ' ? 'space' : e.key.toLocaleLowerCase();
+      if (audioEl !== null) {
+        !audioEl.paused ? audioEl.pause() : audioEl.play();
+      }
+    }
+    pressKey = e.key.toLocaleLowerCase();
     const [data] = keyList.filter((item) => pressKey === item.key);
-    if (data) setAudioItem({...data, pressKey});
+    if (data) setAudioItem({ ...data, pressKey });
 
-    if(e.keyCode === 27 && audioWrapper.current.children.length) audioWrapper.current.innerHTML = "";
+    if (e.keyCode === 27 && audioWrapper.current.children.length) audioWrapper.current.innerHTML = "";
   }
 
   const playAudio = () => {
     audioWrapper.current.innerHTML = "";
-    const audioEl = new Audio();
-    audioEl.controls = true;
-    audioEl.src = audioItem.src;
-    audioWrapper.current.append(audioEl);
-    audioEl.play();
+    const aud = new Audio();
+    aud.controls = true;
+    aud.src = audioItem.src;
+    audioWrapper.current.append(aud);
+    setAudioEl(aud);
+    aud.play();
   };
 
   let data = {
@@ -64,6 +74,7 @@ const App = () => {
         ref={container}
         onKeyDown={keyHandle}
       >
+        <Header/>
         {keyboard &&
           keyboard.map((item, index) => (
             <div className="row-item" key={index}>

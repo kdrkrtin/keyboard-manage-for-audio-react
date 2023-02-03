@@ -45,4 +45,50 @@
     .show-btn{
         @apply opacity-100
     }
+    .header h1{
+        @apply text-3xl text-center mb-10 mt-10
+    }
+    .theme{
+        @apply absolute top-0 right-0
+    }
+    .mode-control div{
+        @apply cursor-pointer transition-all
+    }
+    #mode-check{
+        @apply opacity-0 absolute
+    }
+    #mode-check:checked + .label .ball{
+        @apply translate-x-6
+    }
+    .label{
+        @apply w-[50px] h-[26px] bg-[#111] flex items-center justify-between rounded-[50px] p-[5px] relative
+    }
+    .ball{
+        @apply w-[20px] h-[20px] bg-white absolute top-[2px] left-[2px] rounded-[50%] transition-transform
+    }
+    .fa-moon{
+        @apply text-pink-200
+    }
+    .fa-sun {
+        @apply text-yellow-200
+    }
+
+    /*  DARK  */
+
+    body.dark {
+        @apply bg-[#292c35] text-white
+    }
+    
+    body.dark a{
+        @apply text-white
+    }
+    
+    body.dark .key-item {
+        @apply text-white border-white bg-transparent
+    }
+    
+    body.dark .mode-control div {
+        background-color: #fff;
+        color: #000;
+    }
 }
