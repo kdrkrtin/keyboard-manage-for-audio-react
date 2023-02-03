@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    body{
+        @apply transition-all select-none
+    }
+    .container{
+        @apply mx-auto pt-10 h-screen outline-none border-none max-w-[1440px]
+    }
+    .row-item{
+        @apply flex justify-between
+    }
+    .key-item {
+        @apply p-2 bg-transparent border-solid border-2 text-gray-600 font-semibold rounded-lg m-2 w-full inline-block text-center hover:bg-gray-100 transition-all cursor-pointer relative
+    }
+    .key-item[data-key='`']{
+        width: 100px;
+    }
+    .drag-active{
+        @apply border-blue-400 shadow-md
+    }
+    input#file{
+        @apply absolute left-0 top-0 w-full h-full opacity-0 z-0 cursor-pointer
+    }
+    .audio-list{
+      @apply border-solid border-2 border-gray-100 mt-10 rounded-lg w-1/2 m-2
+    }
+    .audio-list div{
+      @apply border-solid border-b-2 border-gray-100 p-5 last:border-b-0
+    }
+    .audio-div{
+        @apply text-[.5rem]
+    }
+    .none{
+        display: none;
+    }
+    .playAudio audio{
+        @apply w-full border-2 border-solid border-[#dfd8d8] rounded-[26px] mt-28
+    }
+    .remove-audio{
+        @apply absolute top-[-5px] right-1 opacity-0
+    }
+    .show-btn{
+        @apply opacity-100
+    }
+}
