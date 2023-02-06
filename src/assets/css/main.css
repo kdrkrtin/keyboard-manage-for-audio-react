@@ -6,6 +6,25 @@
     body{
         @apply transition-all select-none
     }
+
+    /*  DARK  */
+
+    body.dark {
+        @apply bg-[#292c35] text-white
+    }
+    
+    body.dark a{
+        @apply text-white
+    }
+    
+    body.dark .key-item {
+        @apply text-white border-white bg-transparent
+    }
+    
+    body.dark .mode-control div {
+        background-color: #fff;
+        color: #000;
+    }
     .container{
         @apply mx-auto pt-10 h-screen outline-none border-none max-w-[1440px]
     }
@@ -18,7 +37,7 @@
     .key-item[data-key='`']{
         width: 100px;
     }
-    .drag-active{
+    body.dark .key-item.drag-active{
         @apply border-blue-400 shadow-md
     }
     input#file{
@@ -71,24 +90,5 @@
     }
     .fa-sun {
         @apply text-yellow-200
-    }
-
-    /*  DARK  */
-
-    body.dark {
-        @apply bg-[#292c35] text-white
-    }
-    
-    body.dark a{
-        @apply text-white
-    }
-    
-    body.dark .key-item {
-        @apply text-white border-white bg-transparent
-    }
-    
-    body.dark .mode-control div {
-        background-color: #fff;
-        color: #000;
     }
 }
