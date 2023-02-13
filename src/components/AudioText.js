@@ -1,5 +1,4 @@
 import { memo } from "react";
-// import Context from "../context";
 
 const AudioText = ({ audioData }) => {
   return (
