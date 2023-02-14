@@ -31,7 +31,7 @@
     }
 
     .container{
-        @apply mx-auto pt-10 h-screen outline-none border-none max-w-[1440px]
+        @apply mx-auto pt-10 h-screen outline-none border-none max-w-[1300px]
     }
     .row-item{
         @apply flex justify-between

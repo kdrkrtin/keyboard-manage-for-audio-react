@@ -6,7 +6,6 @@ const { userId } = JSON.parse(localStorage.getItem("userAuth")) || "";
 const dbRef = ref(database, `audios/${userId}`);
 
 const setAudios = (audioList) => {
-  console.log(audioList)
   if (Array.isArray(audioList) && audioList.length) set(dbRef, audioList);
 };
 
