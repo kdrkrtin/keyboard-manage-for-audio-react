@@ -25,6 +25,11 @@
         background-color: #fff;
         color: #000;
     }
+
+    body.dark .sign-in-item input{
+        @apply text-black;
+    }
+
     .container{
         @apply mx-auto pt-10 h-screen outline-none border-none max-w-[1440px]
     }

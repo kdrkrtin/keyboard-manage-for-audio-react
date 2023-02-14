@@ -1,19 +1,24 @@
 import app from "./firebase";
-import { getStorage, ref, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+} from "firebase/storage";
 
 const storage = getStorage(app);
+const listRef = ref(storage, "audios");
+let audioList = [];
 
-const listRef = ref(storage);
-
-const getStorageData = () => {
-  listAll(listRef)
-    .then((res) => console.log(res))
-    .catch((error) => console.log(error));
-};
+listAll(listRef).then(({ items }) => audioList = items);
 
 const uploadData = (file) => {
-    const storageRef = ref(storage, `audios/${file.name}`)
-    return uploadBytes(storageRef, file).then(() => getDownloadURL(storageRef))
-}
+  const storageRef = ref(storage, `audios/${file.name}`);
+  const sameFile = audioList.filter((aud) => {
+    return aud.name === file.name;
+  });
+  return sameFile.length ? getDownloadURL(storageRef) : uploadBytes(storageRef, file).then(() => getDownloadURL(storageRef));
+};
 
-export { getStorageData, uploadData };
+export { uploadData };

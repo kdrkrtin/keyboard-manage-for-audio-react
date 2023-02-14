@@ -1,20 +1,21 @@
-import { useEffect, useState, useRef } from "react";
-import Keyboard from "./Keyboard";
-import Context from "../context";
-import Header from "./Header";
-import Auth from "./Auth";
-import { getStorageData } from "../config/Storage";
+import { useEffect, useState, useRef, useContext } from "react";
+import Keyboard from "components/Audios/Keyboard";
+import Context from "context";
+import Loading from "components/Loading";
+import { getAudios } from "config/GetAudioList";
+import { setAudios } from "config/SetAudioList";
 
 const Home = () => {
-  const [authToken, setAuthToken] = useState("");
   const [keyboard, setKeyboard] = useState([]);
   const [keyboardList, setKeyboardList] = useState([]);
   const [keyList, setKeyList] = useState([]);
   const [audioItem, setAudioItem] = useState({});
   const [audioEl, setAudioEl] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const container = useRef();
   const audioWrapper = useRef();
+
+  const { authToken } = useContext(Context);
 
   useEffect(() => {
     setKeyboard([
@@ -25,21 +26,23 @@ const Home = () => {
       "shift < z x c v b n m , . / shift",
       "control alt metaleft space metaright alt",
     ]);
-
-    const userAuth = localStorage.getItem("userAuth");
-    if (userAuth) {
-      const { expiresIn, token } = JSON.parse(userAuth);
-      if (expiresIn <= new Date().getTime()) {
-        localStorage.removeItem("userAuth");
-        return;
-      }
-      setAuthToken(token);
-    }
   }, []);
 
   useEffect(() => {
     if (audioItem.key) playAudio();
   }, [audioItem]);
+
+  useEffect(() => {
+    if (keyList.length) setAudios(keyList);
+  }, [keyList]);
+
+  useEffect(() => {
+    if (authToken)
+      getAudios().then((res) => {
+        setKeyList(res.val() || []);
+        setLoading(false);
+      });
+  }, [authToken]);
 
   const keyHandle = (e) => {
     let pressKey = "";
@@ -80,42 +83,26 @@ const Home = () => {
     setLoading,
   };
 
-  const authData = {
-    setAuthToken,
-  };
-
   return (
     <>
-      {!authToken ? (
-        <Context.Provider value={authData}>
-          <Auth />
-        </Context.Provider>
-      ) : (
-        <Context.Provider value={data}>
-          <div
-            className="container"
-            tabIndex={0}
-            ref={container}
-            onKeyDown={keyHandle}
-          >
-            <Header />
-            {keyboard &&
-              keyboard.map((item, index) => (
-                <div className="row-item" key={index}>
-                  <Keyboard keyboardRow={item} />
-                  <br />
-                </div>
-              ))}
-            <div className="playAudio" ref={audioWrapper}></div>
-          </div>
-          <div className={`loading ${loading ? 'active' : ''}`}>
-            <div className="lds-ripple">
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </Context.Provider>
-      )}
+      <Context.Provider value={data}>
+        <div
+          className="container"
+          tabIndex={0}
+          ref={container}
+          onKeyDown={keyHandle}
+        >
+          {keyboard &&
+            keyboard.map((item, index) => (
+              <div className="row-item" key={index}>
+                <Keyboard keyboardRow={item} />
+                <br />
+              </div>
+            ))}
+          <div className="playAudio" ref={audioWrapper}></div>
+        </div>
+        <Loading loading={loading} />
+      </Context.Provider>
     </>
   );
 };

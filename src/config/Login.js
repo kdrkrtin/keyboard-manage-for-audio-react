@@ -7,7 +7,7 @@ const userAuth = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password).then(
     ({ _tokenResponse }) => {
       if (_tokenResponse.registered) {
-        const expiresIn = new Date().getTime() + _tokenResponse.expiresIn * 1000;
+        const expiresIn = new Date().getTime() + _tokenResponse.expiresIn * 1000 * 3;
         const token = _tokenResponse.idToken;
         const userId = _tokenResponse.localId;
 
