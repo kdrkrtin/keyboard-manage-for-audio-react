@@ -11,6 +11,12 @@ const Key = ({ keyData }) => {
 
   const { keyList, setKeyList, setAudioItem, setLoading } = useContext(Context);
 
+  keyList?.map(item => {
+    if(item.key === keyData){
+      inpFile.current.classList.add('none')
+    }
+  })
+
   const handleDrag = (e) => {
     if (e.type === "dragenter" || e.type === "dragover") {
       filesArea.current.classList.add("drag-active");
