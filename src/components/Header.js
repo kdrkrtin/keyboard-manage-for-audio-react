@@ -6,7 +6,6 @@ const Header = () => {
   useEffect(() => {
     const mode = localStorage.getItem("mode");
     if (mode === "dark") {
-      document.body.classList.add("dark");
       document.getElementById("mode-check").checked = true;
     }
   }, []);
