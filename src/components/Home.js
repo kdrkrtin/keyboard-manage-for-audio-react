@@ -61,14 +61,18 @@ const Home = () => {
   };
 
   const playAudio = () => {
-    audioWrapper.current.innerHTML = "";
     const aud = new Audio();
     aud.controls = true;
     aud.src = audioItem.src;
     audioWrapper.current.append(aud);
     setAudioEl(aud);
+    clearAudio(aud);
     aud.play();
   };
+
+  const clearAudio = (aud) => {
+    aud.addEventListener('ended', () => audioWrapper.current.innerHTML = "");
+  }
 
   let data = {
     keyboard,
