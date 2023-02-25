@@ -61,17 +61,25 @@ const Home = () => {
   };
 
   const playAudio = () => {
+    const div = document.createElement('div');
+    const remove = document.createElement('button');
+    remove.innerHTML = 'x';
     const aud = new Audio();
     aud.controls = true;
     aud.src = audioItem.src;
-    audioWrapper.current.append(aud);
+    div.classList.add('audio-element');
+    div.append(aud, remove);
+    audioWrapper.current.append(div);
     setAudioEl(aud);
-    clearAudio(aud);
+    clearAudio(div, aud);
+    removeAudioEl(div, remove);
     aud.play();
   };
 
-  const clearAudio = (aud) => {
-    aud.addEventListener('ended', () => aud.remove());
+  const removeAudioEl = (auDiv, btn) => btn.addEventListener('click', () => auDiv.remove());
+
+  const clearAudio = (auDiv,aud) => {
+    aud.addEventListener('ended', () => auDiv.remove());
   }
 
   let data = {

@@ -63,8 +63,14 @@
     .playAudio{
         @apply mt-12 max-h-80 p-5 overflow-y-auto;
     }
+    .playAudio .audio-element{
+        @apply flex items-center mt-4;
+    }
     .playAudio audio{
-        @apply w-full border-2 border-solid border-[#dfd8d8] rounded-[26px] mt-4;
+        @apply w-[95%] border-2 border-solid border-[#dfd8d8] rounded-[26px];
+    }
+    .playAudio button{
+        @apply w-[5%] text-center cursor-pointer;
     }
     .remove-audio{
         @apply absolute top-[-5px] right-1 opacity-0
