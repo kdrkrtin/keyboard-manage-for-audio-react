@@ -71,7 +71,7 @@ const Home = () => {
   };
 
   const clearAudio = (aud) => {
-    aud.addEventListener('ended', () => audioWrapper.current.innerHTML = "");
+    aud.addEventListener('ended', () => aud.remove());
   }
 
   let data = {
